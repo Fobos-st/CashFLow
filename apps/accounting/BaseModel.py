@@ -43,11 +43,10 @@ class AbstractTransactionType(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='custom_transaction_types'
     )
 
     class Meta:
-        order_by = ['name']
+        ordering = ['title']
         indexes = [
             models.Index(fields=['user']),
         ]
@@ -75,11 +74,10 @@ class AbstractTransactionStatus(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='custom_transaction_status'
     )
 
     class Meta:
-        order_by = ['name']
+        ordering = ['title']
         indexes = [
             models.Index(fields=['user']),
         ]
@@ -107,7 +105,6 @@ class AbstractCategory(MPTTModel):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='children'
     )
     is_system = models.BooleanField(default=False)
     user = models.ForeignKey(
@@ -115,7 +112,6 @@ class AbstractCategory(MPTTModel):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='custom_categories'
     )
 
     class MPTTMeta:

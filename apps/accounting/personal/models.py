@@ -72,7 +72,7 @@ class PersonalTransaction(models.Model):
 
     class Meta:
         db_table = 'personal_transactions'
-        order_by = ['date']
+        ordering = ['date']
         indexes = [
             models.Index(fields=['account']),
         ]

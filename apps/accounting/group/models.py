@@ -83,7 +83,6 @@ class GroupTransaction(models.Model):
     group_account = models.ForeignKey(
         GroupAbstractAccount,
         on_delete=models.CASCADE,
-        related_name='transactions'
     )
     initiator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     transaction_type = models.ForeignKey(GroupTransactionType, on_delete=models.PROTECT)
