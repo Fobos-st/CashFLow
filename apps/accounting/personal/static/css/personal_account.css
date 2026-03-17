@@ -247,3 +247,48 @@
         font-size: 14px;
     }
 }
+
+/* Стилизация поля выбора даты */
+.input-field input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    color: var(--text-main);
+    cursor: pointer;
+    position: relative;
+    background-color: #ffffff;
+    padding: 9px 12px; /* Чуть меньше паддинг, чтобы выровнять высоту с другими полями */
+}
+
+/* Стилизация иконки календаря */
+.input-field input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* Добавление кастомной иконки календаря через фон (опционально, для красоты) */
+.input-field input[type="date"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+/* Состояние при фокусе */
+.input-field input[type="date"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Убираем лишние кнопки в Chrome */
+.input-field input[type="date"]::-webkit-inner-spin-button,
+.input-field input[type="date"]::-webkit-clear-button {
+    display: none;
+}
