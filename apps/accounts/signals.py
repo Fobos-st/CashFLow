@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from apps.accounting.personal.models import (PersonalAbstractAccount, PersonalTransactionType,
+from apps.accounting.personal.models import (PersonalAccount, PersonalTransactionType,
                                              PersonalTransactionStatus, PersonalCategory)
 from apps.accounts.models import CustomUser
 
@@ -8,7 +8,7 @@ from apps.accounts.models import CustomUser
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        PersonalAbstractAccount.objects.create(user=instance, currency="RUB")
+        PersonalAccount.objects.create(user=instance, currency="RUB", name="Первый счёт")
         PersonalTransactionStatus.objects.create(user=instance, title="Бизнес", is_system=True)
         PersonalTransactionStatus.objects.create(user=instance, title="Личное", is_system=True)
         PersonalTransactionStatus.objects.create(user=instance, title="Налог", is_system=True)
