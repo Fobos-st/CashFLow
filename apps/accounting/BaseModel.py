@@ -115,7 +115,7 @@ class AbstractCategory(MPTTModel):
     )
 
     class MPTTMeta:
-        order_insertion_by = ['name']
+        order_insertion_by = ['title']
 
     class Meta:
         indexes = [
