@@ -1,8 +1,8 @@
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="/" aria-label="CashFlow — на главную">CashFlow</a>
-
     <div class="header-right">
+    {% if request.resolver_match.url_name not in "login register" %}
       <div class="account-switcher" id="accountSwitcher">
         <button class="btn btn-ghost" id="accountBtn" type="button" aria-haspopup="true" aria-expanded="false">
           <span class="account-label">Счёт:</span>
@@ -18,8 +18,8 @@
           <button class="menu-item menu-item-accent" type="button" id="addAccountBtn" role="menuitem">+ Добавить счёт</button>
         </div>
       </div>
-
       <a class="btn btn-ghost" href="/settings" id="settingsBtn">*</a>
     </div>
+    {% endif %}
   </div>
 </header>
