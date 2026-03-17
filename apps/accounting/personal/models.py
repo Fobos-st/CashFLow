@@ -14,9 +14,9 @@ class PersonalAbstractAccount(AbstractAccount):
     Атрибуты
         balance (DecimalField): Баланс счета, дефолт 0.00, 15 макс. общие количество цифр, 2 цифры после запятой(Наследуемый)
         currency (CharField): Валюта счета(Наследуемый)
-        user (OneToOneField -> CustomUser): Связь счета с пользователем
+        user (ForeignKey -> CustomUser): Связь счета с пользователем
     """
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name="Владелец счета", related_name='owner_account')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Владелец счета", related_name='owner_account')
 
     class Meta:
         db_table = 'personal_accounts'
