@@ -13,49 +13,26 @@
             <div class="account-header">
                 <div class="account-meta">
                     <span class="label">Текущий счет</span>
-                    <h1 class="account-name">Основной расчетный</h1>
+                    <h1 class="account-name">{{ account.name }}</h1>
                 </div>
                 <div class="account-balance-group">
-                    <span class="balance-amount">1,250,000.00</span>
-                    <span class="currency-badge">RUB</span>
+                    <span class="balance-amount">{{ account.balance }}</span>
+                    <span class="currency-badge">{{ account.currency }}</span>
                 </div>
             </div>
-
-            <form class="transaction-quick-form" id="addTransactionForm">
+            <form class="transaction-quick-form" id="addTransactionForm" method="post">
+                {% csrf_token %}
                 <div class="form-grid">
-                    <div class="input-field">
-                        <label>Сумма</label>
-                        <input type="number" step="0.01" placeholder="0.00" required name="amount">
-                    </div>
-                    <div class="input-field">
-                        <label>Статус</label>
-                        <select name="status">
-                            <option value="personal">🏠 Личное</option>
-                            <option value="business">💼 Бизнес</option>
-                        </select>
-                    </div>
-                    <div class="input-field">
-                        <label>Тип</label>
-                        <select name="type">
-                            <option value="income">📈 Приход</option>
-                            <option value="expense">📉 Расход</option>
-                        </select>
-                    </div>
-                    <div class="input-field">
-                        <label>Категория</label>
-                        <select name="category" id="categorySelect">
-                            <option value="food">Питание</option>
-                            <option value="office">Офис</option>
-                            <option value="marketing">Маркетинг</option>
-                        </select>
-                    </div>
-                    <div class="input-field">
-                        <label>Подкатегория</label>
-                        <select name="subcategory" id="subcategorySelect">
-                            <option value="cafe">Кафе и рестораны</option>
-                            <option value="ads">Таргет</option>
-                        </select>
-                    </div>
+                    {% for field in form %}
+                        <div class="input-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <span class="error-text">{{ field.errors.0 }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
                     <div class="action-field">
                         <button type="submit" class="btn-add">Добавить операцию</button>
                     </div>
