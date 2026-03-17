@@ -1,6 +1,6 @@
 from django_mptt_admin.admin import DjangoMpttAdmin
 from django.contrib import admin
-from .models import PersonalCategory, PersonalAbstractAccount, PersonalTransactionStatus, PersonalTransactionType
+from .models import PersonalCategory, PersonalAccount, PersonalTransactionStatus, PersonalTransactionType, PersonalTransaction
 
 
 @admin.register(PersonalCategory)
@@ -11,5 +11,6 @@ class CategoryAdmin(DjangoMpttAdmin):
     pass
 
 admin.site.register(PersonalTransactionStatus)
-admin.site.register(PersonalAbstractAccount)
+admin.site.register(PersonalAccount)
 admin.site.register(PersonalTransactionType)
+admin.site.register(PersonalTransaction)
