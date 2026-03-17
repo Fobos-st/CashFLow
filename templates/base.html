@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon/">
+    <!-- основной CSS (всегда подключается) -->
+    <link href="{% static 'css/header.css' %}" rel="stylesheet">
+
+    <!-- дополнительный CSS -->
+    {% block extra_css %}
+    {% endblock %}
+</head>
+<body>
+    {% include 'header.html' %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+
+    <!-- Основные JS (всегда подключаются) -->
+    <script src="{% static 'js/header.js' %}"></script>
+
+    <!-- Дополнительный JS  -->
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="{% static 'css/log_reg.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="auth-page">
+  <section class="auth-shell" aria-label="Вход в аккаунт">
+    <aside class="auth-side">
+      <a class="auth-brand" href="/">
+        <span class="auth-mark" aria-hidden="true"></span>
+        <span>Cashflow</span>
+      </a>
+
+      <h1>С возвращением</h1>
+      <p>Войдите, чтобы продолжить работу с личными и бизнес‑счетами.</p>
+
+      <ul class="auth-perks">
+        <li class="auth-perk">
+          <span class="auth-dot" aria-hidden="true"></span>
+          <div>
+            <b>Быстрый доступ</b>
+            <span>История операций, фильтры и отчеты — сразу после входа.</span>
+          </div>
+        </li>
+        <li class="auth-perk">
+          <span class="auth-dot" aria-hidden="true"></span>
+          <div>
+            <b>Безопасность</b>
+            <span>Используйте сложный пароль и не передавайте его третьим лицам.</span>
+          </div>
+        </li>
+      </ul>
+    </aside>
+
+    <div class="auth-card">
+      <h2>Вход</h2>
+      <p class="auth-subtitle">Введите данные, которые использовали при регистрации.</p>
+
+      <!-- Если есть ошибка — показывайте блок ниже -->
+      <!-- <div class="auth-error">Неверный логин или пароль.</div> -->
+
+      <form class="auth-form" method="post">
+        {% csrf_token %}
+        <div class="auth-field">
+          <label for="login-identifier">Email</label>
+          {{ form.username }}
+        </div>
+
+        <div class="auth-field">
+          <label for="login-password">Пароль</label>
+          {{ form.password }}
+          <div class="auth-help">
+            <a class="auth-link" href="/reset-password">Забыли пароль?</a>
+          </div>
+        </div>
+
+        <div class="auth-actions">
+          <a class="auth-link" href="{% url 'account:register' %}">Нет аккаунта? Регистрация</a>
+          <button class="auth-btn primary" type="submit">Войти</button>
+        </div>
+
+        <p class="auth-footnote">
+          Нажимая «Войти», вы подтверждаете, что согласны с правилами сервиса.
+        </p>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}

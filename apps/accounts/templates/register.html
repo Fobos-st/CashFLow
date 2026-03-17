@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="{% static 'css/log_reg.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="auth-page">
+  <section class="auth-shell" aria-label="Регистрация">
+    <aside class="auth-side">
+      <a class="auth-brand" href="/">
+        <span class="auth-mark" aria-hidden="true"></span>
+        <span>Cashflow</span>
+      </a>
+
+      <h1>Создайте аккаунт</h1>
+      <p>Регистрация занимает меньше минуты. После этого сможете вести учет доходов и расходов.</p>
+
+      <ul class="auth-perks">
+        <li class="auth-perk">
+          <span class="auth-dot" aria-hidden="true"></span>
+          <div>
+            <b>Личные и бизнес‑счета</b>
+            <span>Удобно разделять бюджеты и видеть картину по каждому счету.</span>
+          </div>
+        </li>
+        <li class="auth-perk">
+          <span class="auth-dot" aria-hidden="true"></span>
+          <div>
+            <b>Контроль операций</b>
+            <span>Категории, поиск, фильтры, экспорт — по мере роста проекта.</span>
+          </div>
+        </li>
+      </ul>
+    </aside>
+
+    <div class="auth-card">
+      <h2>Регистрация</h2>
+      <p class="auth-subtitle">Заполните поля ниже. Пароль минимум 8 символов.</p>
+
+      <!-- Пример ошибок формы -->
+      <!--
+      <div class="auth-error">
+        Исправьте ошибки: email уже занят, пароль слишком короткий.
+      </div>
+      -->
+
+      <form class="auth-form" method="post">
+        {% csrf_token %}
+        <div class="auth-row">
+          <div class="auth-field">
+            <label for="reg-firstname">Имя</label>
+            {{ form.first_name }}
+          </div>
+
+          <div class="auth-field">
+            <label for="reg-lastname">Фамилия</label>
+            {{ form.last_name }}
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="reg-email">Email</label>
+          {{ form.email }}
+        </div>
+
+        <div class="auth-row">
+          <div class="auth-field">
+            <label for="reg-password">Пароль</label>
+            {{ form.password1 }}
+            <div class="auth-help">Минимум 8 символов, лучше 12+.</div>
+          </div>
+
+          <div class="auth-field">
+            <label for="reg-password2">Повтор пароля</label>
+            {{ form.password2 }}
+          </div>
+        </div>
+
+        <div class="auth-actions">
+          <a class="auth-link" href="/login">Уже есть аккаунт? Войти</a>
+          <button class="auth-btn primary" type="submit">Создать аккаунт</button>
+        </div>
+
+        <p class="auth-footnote">
+          Регистрируясь, вы соглашаетесь с правилами сервиса и обработкой данных.
+        </p>
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}

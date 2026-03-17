@@ -1,0 +1,225 @@
+:root{
+  --text-header: #eaf0ff;
+}
+
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, rgb(75 125 224 / 92%), rgb(5 25 65 / 70%));
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  background: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.brand{
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--text-header);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background .15s ease, transform .15s ease;
+}
+.brand:hover{
+  background: var(--panel);
+}
+.brand:active{
+  transform: translateY(1px);
+}
+
+.header-right{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-header);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.btn:hover{
+  background: var(--panel-2);
+  border-color: rgba(234,240,255,0.22);
+}
+.btn:active{
+  transform: translateY(1px);
+}
+
+.btn-ghost{
+  background: transparent;
+}
+.btn-ghost:hover{
+  background: var(--panel);
+}
+
+.btn-primary{
+  border-color: rgba(110,168,255,0.40);
+  background: rgba(110,168,255,0.14);
+}
+.btn-primary:hover{
+  background: rgba(110,168,255,0.22);
+}
+
+.account-switcher{
+  position: relative;
+}
+
+#accountBtn{
+  white-space: nowrap;
+}
+.account-label{
+  color: var(--muted);
+  font-weight: 700;
+}
+.account-name-header{
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chev{
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.menu{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  min-width: 240px;
+  background: rgba(11,18,32,0.96);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 8px;
+  display: none;
+}
+
+.account-switcher.is-open .menu{
+  display: block;
+}
+
+.menu-item{
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-header);
+  padding: 10px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 650;
+  transition: background .15s ease, border-color .15s ease;
+}
+.menu-item:hover{
+  background: var(--panel);
+  border-color: rgba(234,240,255,0.10);
+}
+.menu-item:focus{
+  outline: none;
+  background: var(--panel-2);
+  border-color: rgba(110,168,255,0.40);
+}
+
+.menu-item-accent{
+  color: var(--text-header);
+  background: rgba(110,168,255,0.12);
+  border-color: rgba(110,168,255,0.22);
+}
+.menu-item-accent:hover{
+  background: rgba(110,168,255,0.20);
+}
+
+.menu-sep{
+  height: 1px;
+  background: var(--border);
+  margin: 6px 4px;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 560px){
+  .header-inner {
+    padding: 14px 16px;
+  }
+}
+
+/* Исправление для полного заполнения header */
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(to bottom, rgb(3 35 100 / 92%), rgb(83 128 217 / 70%));
+  border-bottom: 1px solid var(--border);
+  margin: 0;
+  padding: 0;
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Обеспечиваем правильную работу sticky */
+* {
+  box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

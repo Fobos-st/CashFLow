@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="{% static 'css/personal_account.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="cashflow-main">
+    <div class="container">
+        <!-- Блок 1: Информация о счете и добавление -->
+        <section class="account-card card">
+            <div class="account-header">
+                <div class="account-meta">
+                    <span class="label">Текущий счет</span>
+                    <h1 class="account-name">Основной расчетный</h1>
+                </div>
+                <div class="account-balance-group">
+                    <span class="balance-amount">1,250,000.00</span>
+                    <span class="currency-badge">RUB</span>
+                </div>
+            </div>
+
+            <form class="transaction-quick-form" id="addTransactionForm">
+                <div class="form-grid">
+                    <div class="input-field">
+                        <label>Сумма</label>
+                        <input type="number" step="0.01" placeholder="0.00" required name="amount">
+                    </div>
+                    <div class="input-field">
+                        <label>Статус</label>
+                        <select name="status">
+                            <option value="personal">🏠 Личное</option>
+                            <option value="business">💼 Бизнес</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label>Тип</label>
+                        <select name="type">
+                            <option value="income">📈 Приход</option>
+                            <option value="expense">📉 Расход</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label>Категория</label>
+                        <select name="category" id="categorySelect">
+                            <option value="food">Питание</option>
+                            <option value="office">Офис</option>
+                            <option value="marketing">Маркетинг</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label>Подкатегория</label>
+                        <select name="subcategory" id="subcategorySelect">
+                            <option value="cafe">Кафе и рестораны</option>
+                            <option value="ads">Таргет</option>
+                        </select>
+                    </div>
+                    <div class="action-field">
+                        <button type="submit" class="btn-add">Добавить операцию</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Блок 2: Фильтры и Таблица -->
+        <section class="transactions-container card">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <select class="filter-select" id="filterStatus">
+                        <option value="all">Все статусы</option>
+                        <option value="business">Бизнес</option>
+                        <option value="personal">Личное</option>
+                    </select>
+                    <select class="filter-select" id="filterType">
+                        <option value="all">Все типы</option>
+                        <option value="income">Приход</option>
+                        <option value="expense">Расход</option>
+                    </select>
+                    <input type="text" class="filter-input" placeholder="Поиск по категории...">
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="dds-table">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                            <th>Тип</th>
+                            <th>Категория</th>
+                            <th>Подкатегория</th>
+                            <th class="text-right">Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsBody">
+                        <!-- Здесь будет 20 строк, генерируемых бэкендом -->
+                        <tr>
+                            <td>20.10.2023</td>
+                            <td><span class="status-tag status-business">Бизнес</span></td>
+                            <td class="type-income">Приход</td>
+                            <td>Маркетинг</td>
+                            <td>Реклама FB</td>
+                            <td class="text-right"><strong>2529.04 ₽</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="pagination">
+                <button class="btn-page" disabled>&laquo;</button>
+                <button class="btn-page active">1</button>
+                <button class="btn-page">2</button>
+                <button class="btn-page">3</button>
+                <button class="btn-page">&raquo;</button>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/personal_account.js' %}"></script>
+{% endblock %}

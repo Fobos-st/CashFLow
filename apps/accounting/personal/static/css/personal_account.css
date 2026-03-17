@@ -1,0 +1,249 @@
+:root {
+    --primary: #4f46e5;
+    --success: #10b981;
+    --danger: #ef4444;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+}
+
+.cashflow-main {
+    padding: 40px 20px;
+    background-color: var(--bg);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+}
+
+.container { max-width: 1200px; margin: 0 auto; }
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    padding: 24px;
+}
+
+/* Стили счета */
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 24px;
+}
+
+.account-name { font-size: 24px; margin: 4px 0 0; }
+.label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+.balance-amount { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+.currency-badge {
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Форма */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.input-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-muted); }
+.input-field input, .input-field select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.btn-add {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 11px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* Таблица и фильтры */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filter-select, .filter-input {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.dds-table {width: 100%; border-collapse: collapse; margin-top: 10px;}
+.dds-table th {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.dds-table td { padding: 16px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+
+.text-right { text-align: right; }
+.type-income { color: var(--success); font-weight: 600; }
+.type-expense { color: var(--danger); font-weight: 600; }
+
+.status-tag {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Пагинация */
+.pagination { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+.btn-page {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.btn-page.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* 1. Глобальные правки для адаптивности */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px; /* Отступы по бокам на малых экранах */
+}
+
+/* 2. Адаптация шапки счета */
+@media (max-width: 768px) {
+    .account-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .balance-amount {
+        font-size: 28px;
+    }
+}
+
+/* 3. Адаптация сетки формы */
+.form-grid {
+    display: grid;
+    /* По умолчанию: 1 колонка на мобильных */
+    grid-template-columns: 1fr;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+@media (min-width: 640px) {
+    /* Планшеты: 2 колонки */
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    /* Десктоп: 6 колонок (как в оригинале) */
+    .form-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* 4. Адаптация панели фильтров */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap; /* Позволяет фильтрам переноситься на новую строку */
+    gap: 10px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.filter-select, .filter-input {
+    flex: 1 1 150px; /* Растягиваются, но не меньше 150px */
+}
+
+/* 5. Магия для таблицы (Responsive Table) */
+@media (max-width: 768px) {
+    /* Скрываем стандартный заголовок таблицы */
+    .dds-table thead {
+        display: none;
+    }
+
+    .dds-table, .dds-table tbody, .dds-table tr, .dds-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .dds-table tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px;
+        background: #fff;
+    }
+
+    .dds-table td {
+        text-align: right;
+        padding: 8px 10px;
+        border-bottom: 1px solid #f1f5f9;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dds-table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Добавляем названия столбцов через псевдоэлементы */
+    .dds-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-muted);
+        font-size: 12px;
+        text-align: left;
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+}
+
+/* 6. Улучшение пагинации для тач-скринов */
+@media (max-width: 480px) {
+    .pagination {
+        gap: 4px;
+    }
+    .btn-page {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}

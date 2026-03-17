@@ -1,0 +1,25 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="/" aria-label="CashFlow — на главную">CashFlow</a>
+
+    <div class="header-right">
+      <div class="account-switcher" id="accountSwitcher">
+        <button class="btn btn-ghost" id="accountBtn" type="button" aria-haspopup="true" aria-expanded="false">
+          <span class="account-label">Счёт:</span>
+          <span class="account-name-header" id="accountName">Личный</span>
+          <span class="chev" aria-hidden="true">▾</span>
+        </button>
+
+        <div class="menu" id="accountMenu" role="menu" aria-label="Выбор счёта">
+          <button class="menu-item" type="button" data-account="Личный" role="menuitem">Личный</button>
+          <button class="menu-item" type="button" data-account="Бизнес" role="menuitem">Бизнес</button>
+          <button class="menu-item" type="button" data-account="Инвестиции" role="menuitem">Инвестиции</button>
+          <div class="menu-sep" role="separator"></div>
+          <button class="menu-item menu-item-accent" type="button" id="addAccountBtn" role="menuitem">+ Добавить счёт</button>
+        </div>
+      </div>
+
+      <a class="btn btn-ghost" href="/settings" id="settingsBtn">*</a>
+    </div>
+  </div>
+</header>
