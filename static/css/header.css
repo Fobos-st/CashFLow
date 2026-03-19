@@ -171,7 +171,20 @@ body {
   margin: 6px 4px;
 }
 a.menu-item {
-    text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text-header);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  text-decoration: none;
 }
 
 /* Мобильная адаптация */
