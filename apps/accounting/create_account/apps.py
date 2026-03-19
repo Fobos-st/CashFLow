@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class CreateAccountConfig(AppConfig):
-    name = 'create_account'
+    name = 'apps.accounting.create_account'
