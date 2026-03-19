@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: cashflow_postgres
+    environment:
+      POSTGRES_USER: CashFlow
+      POSTGRES_PASSWORD: SuperPasswordCashFlow
+      POSTGRES_DB: CashFLow
+    volumes:
+      - cashflow_db:/var/lib/postgresql
+    expose:
+      - "5432"
+
+  django:
+    container_name: django
+    build:
+      context: .
+    expose:
+      - "8000"
+    depends_on:
+      - postgres
+    environment:
+      SECRET_KEY: "!qkg4qsk*!n&l^6Q2zqk-*5684)s)p)j%Qqg+w3g2#t(#tedn_"
+      DB_USER:  "CashFlow"
+      DB_PASSWORD: "SuperPasswordCashFlow"
+      DB_NAME: "CashFLow"
+      DB_PORT: "5432"
+      DB_HOST: "postgres"
+      DEBUG: "False"
+    volumes:
+      - static_volume:/app/staticfiles
+#      - production_logs:/var/log/django  при DEBUG=True + надо настроить LOGGING в settings
+
+  nginx:
+    container_name: cashflow_nginx
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+#      - /etc/letsencrypt/live/cashflow.ru/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro  SSL сертификат для прода
+#      - /etc/letsencrypt/live/cashflow.ru/privkey.pem:/etc/nginx/ssl/privkey.pem:ro SSL сертификат для прода
+      - static_volume:/staticfiles/
+    ports:
+      - "80:80"
+#      - "443:443"   Порт для HTTPS
+    depends_on:
+      - django
+
+
+volumes:
+  static_volume:
+  cashflow_db:
+  production_logs:
