@@ -1,46 +1,57 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const tableBody = document.getElementById('transactionsBody');
+document.addEventListener('DOMContentLoaded', function() {
+    const filterType = document.getElementById('filterType');
+    const filterCategory = document.getElementById('filterCategory');
+    const filterSubCategory = document.getElementById('filterAnotherCategory');
 
-    // Пример структуры данных, которую должен генерировать backend
-    const mockData = Array.from({ length: 20 }).map((_, i) => ({
-        id: i,
-        date: '20.10.2023',
-        status: i % 2 === 0 ? 'business' : 'personal',
-        statusName: i % 2 === 0 ? 'Бизнес' : 'Личное',
-        type: i % 3 === 0 ? 'income' : 'expense',
-        typeName: i % 3 === 0 ? 'Приход' : 'Расход',
-        category: 'Маркетинг',
-        subcategory: 'Реклама FB',
-        amount: (Math.random() * 10000).toFixed(2)
-    }));
+    // Сохраняем все опции категорий и подкатегорий в массивы для фильтрации
+    const allCategories = Array.from(filterCategory.querySelectorAll('option')).filter(opt => opt.value !== "");
+    const allSubCategories = Array.from(filterSubCategory.querySelectorAll('option')).filter(opt => opt.value !== "");
 
-    // Логика фильтрации (клиентская часть для удобства)
-    const filters = document.querySelectorAll('.filter-select, .filter-input');
-    filters.forEach(filter => {
-        filter.addEventListener('change', () => {
-            console.log('Отправка запроса на бэкенд с параметрами фильтрации...');
-            // В твоем случае здесь может быть либо переход по URL с query string,
-            // либо просто отправка формы.
-        });
+    // Функция для сброса и блокировки селекта
+    function resetAndDisable(selectElement) {
+        selectElement.innerHTML = '<option value="">Выберите вариант</option>';
+        selectElement.disabled = true;
+        selectElement.dispatchEvent(new Event('change')); // Уведомляем дочерние элементы
+    }
+
+    // Логика для категорий (зависит от filterType)
+    filterType.addEventListener('change', function() {
+        const selectedTypeId = this.value;
+
+        if (!selectedTypeId) {
+            resetAndDisable(filterCategory);
+            return;
+        }
+
+        // Фильтруем
+        const filtered = allCategories.filter(opt => opt.getAttribute('data-type-id') === selectedTypeId);
+
+        filterCategory.innerHTML = '<option value="">Выберите категорию</option>';
+        filtered.forEach(opt => filterCategory.appendChild(opt.cloneNode(true)));
+        filterCategory.disabled = false;
+
+        // Сбрасываем подкатегории при смене типа
+        resetAndDisable(filterSubCategory);
     });
 
-    // Обработка формы
-    const form = document.getElementById('addTransactionForm');
-    form.addEventListener('submit', (e) => {
-        // Твоему бэкенду нужно просто принять POST запрос отсюда
-        console.log('Форма готова к отправке на сервер');
+    // Логика для подкатегорий (зависит от filterCategory)
+    filterCategory.addEventListener('change', function() {
+        const selectedCategoryId = this.value;
+
+        if (!selectedCategoryId) {
+            resetAndDisable(filterSubCategory);
+            return;
+        }
+
+        // Фильтруем подкатегории по data-category-id
+        const filtered = allSubCategories.filter(opt => opt.getAttribute('data-category-id') === selectedCategoryId);
+
+        filterSubCategory.innerHTML = '<option value="">Выберите подкатегорию</option>';
+        filtered.forEach(opt => filterSubCategory.appendChild(opt.cloneNode(true)));
+        filterSubCategory.disabled = false;
     });
+
+    // Инициализация (на случай если страница загружена с уже выбранными значениями)
+    if (!filterType.value) filterCategory.disabled = true;
+    if (!filterCategory.value) filterSubCategory.disabled = true;
 });
-
-function renderTable(data) {
-    tableBody.innerHTML = data.map(item => `
-        <tr>
-            <td data-label="Дата">${item.date}</td>
-            <td data-label="Статус"><span class="status-tag status-${item.status}">${item.statusName}</span></td>
-            <td data-label="Тип" class="${item.type === 'income' ? 'type-income' : 'type-expense'}">${item.typeName}</td>
-            <td data-label="Категория">${item.category}</td>
-            <td data-label="Подкатегория">${item.subcategory}</td>
-            <td data-label="Сумма" class="text-right"><strong>${item.amount} ₽</strong></td>
-        </tr>
-    `).join('');
-}
