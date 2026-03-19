@@ -3,6 +3,7 @@ from mptt.fields import TreeForeignKey
 
 from apps.accounting.BaseModel import AbstractAccount, AbstractCategory, AbstractTransactionStatus, AbstractTransactionType
 from apps.accounts.models import CustomUser
+from .utils import generate_unique_code, unique_slugify
 
 
 class GroupAbstractAccount(AbstractAccount):
@@ -12,6 +13,7 @@ class GroupAbstractAccount(AbstractAccount):
     Атрибуты
         balance (DecimalField): Баланс счета, дефолт 0.00, 15 макс. общие количество цифр, 2 цифры после запятой(Наследуемый)
         currency (CharField): Валюта счета(Наследуемый)
+        name (CharField): Имя счета
         owner (ForeignKey -> CustomUser): Связь счета с создателем
         slug (SlugField): Slug группы
         entry_code (CharField): Код для вступления в группу
@@ -26,6 +28,12 @@ class GroupAbstractAccount(AbstractAccount):
 
     def __str__(self):
         return f"Счёт {self.owner.full_name}"
+
+    def save(self, *args, **kwargs):
+        """При сохранении генерируем уникальный слаг и код приглашения"""
+        self.slug = unique_slugify(self, self.name, self.slug)
+        self.entry_code = generate_unique_code(self)
+        super().save(*args, **kwargs)
 
 
 class GroupAccountMember(models.Model):
