@@ -24,15 +24,18 @@
                 {% csrf_token %}
                 <div class="form-grid">
                     {% for field in form %}
-                        <div class="input-field">
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% if field.label != 'Account' %}
+                            <div class="input-field">
+                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <span class="error-text">{{ field.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+                        {% else %}
                             {{ field }}
-                            {% if field.errors %}
-                                <span class="error-text">{{ field.errors.0 }}</span>
-                            {% endif %}
-                        </div>
+                        {% endif %}
                     {% endfor %}
-
                     <div class="action-field">
                         <button type="submit" class="btn-add">Добавить операцию</button>
                     </div>
@@ -42,21 +45,42 @@
 
         <!-- Блок 2: Фильтры и Таблица -->
         <section class="transactions-container card">
-            <div class="filter-bar">
-                <div class="filter-group">
-                    <select class="filter-select" id="filterStatus">
-                        <option value="all">Все статусы</option>
-                        <option value="business">Бизнес</option>
-                        <option value="personal">Личное</option>
-                    </select>
-                    <select class="filter-select" id="filterType">
-                        <option value="all">Все типы</option>
-                        <option value="income">Приход</option>
-                        <option value="expense">Расход</option>
-                    </select>
-                    <input type="text" class="filter-input" placeholder="Поиск по категории...">
+
+            <form method="get">
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <select class="filter-select" id="filterStatus">
+                            <option value="">Выберите статус</option>
+                            {% for status in statuses %}
+                                <option value="{{ status.id }}">{{ status.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="filter-select" id="filterType">
+                            <option value="">Выберите тип</option>
+                            {% for type in types %}
+                                <option value="{{ type.id }}">{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="filter-select" id="filterCategory">
+                            <option value="">Выберите категория</option>
+                            {% for category in categories %}
+                                <!-- Важно: добавляем data-type-id -->
+                                <option value="{{ category.id }}" data-type-id="{{ category.type_id }}">
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <select class="filter-select" id="filterAnotherCategory">
+                            <option value="">Выберите подкатегорию</option>
+                            {% for sub in subcategories %}
+                                <option value="{{ sub.id }}" data-category-id="{{ sub.parent_category_id }}">
+                                    {{ sub.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <div class="table-responsive">
                 <table class="dds-table">
@@ -72,25 +96,45 @@
                     </thead>
                     <tbody id="transactionsBody">
                         <!-- Здесь будет 20 строк, генерируемых бэкендом -->
+                        {% for transaction in transactions %}
                         <tr>
-                            <td>20.10.2023</td>
-                            <td><span class="status-tag status-business">Бизнес</span></td>
-                            <td class="type-income">Приход</td>
-                            <td>Маркетинг</td>
-                            <td>Реклама FB</td>
-                            <td class="text-right"><strong>2529.04 ₽</strong></td>
+                            <td>{{ transaction.date|date:"d.m.Y" }}</td>
+                            <td><span class="status-tag">{{ transaction.status.title }}</span></td>
+                            <td>{{ transaction.transaction_type.title }}</td>
+                            <td>{{ transaction.category.parent }}</td>
+                            <td>{{ transaction.category }}</td>
+                            <td class="text-right"><strong>{{ transaction.amount }}</strong></td>
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
 
             <!-- Пагинация -->
             <div class="pagination">
-                <button class="btn-page" disabled>&laquo;</button>
-                <button class="btn-page active">1</button>
-                <button class="btn-page">2</button>
-                <button class="btn-page">3</button>
-                <button class="btn-page">&raquo;</button>
+                {% if page_obj.has_previous %}
+                    <a href="{{ account.get_absolut_url }}?page={{ page_obj.previous_page_number }}" class="btn-page">
+                        &laquo;
+                    </a>
+                {% else %}
+                    <button class="btn-page" disabled>&laquo;</button>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <button class="btn-page active">{{ num }}</button>
+                    {% elif num > page_obj.number|add:-3 and num < page_obj.number|add:3 %}
+                        <a href="{{ account.get_absolut_url }}?page={{num}}" class="btn-page">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="{{ account.get_absolut_url }}?page={{ page_obj.next_page_number }}" class="btn-page">
+                        &raquo;
+                    </a>
+                {% else %}
+                    <button class="btn-page" disabled>&raquo;</button>
+                {% endif %}
             </div>
         </section>
     </div>
