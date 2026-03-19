@@ -8,7 +8,7 @@ from apps.accounts.forms import CustomUserCreationForm, CustomUserLoginForm
 class RegisterView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('')
+            return redirect('main:index')
         form = CustomUserCreationForm()
         return render(request, 'register.html', {'form': form})
 
@@ -18,7 +18,7 @@ class RegisterView(View):
             user = form.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             request.session.set_expiry(1209600)
-            return redirect('')
+            return redirect('main:index')
         else:
             form = CustomUserCreationForm()
         return render(request, 'register.html', {'form': form})
@@ -27,7 +27,7 @@ class RegisterView(View):
 class LoginView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect('')
+            return redirect('main:index')
         form = CustomUserLoginForm()
         return render(request, 'login.html', {'form': form})
 
@@ -38,7 +38,7 @@ class LoginView(View):
             user = form.get_user()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             request.session.set_expiry(1209600)
-            return redirect('')
+            return redirect('main:index')
         else:
             print(form.errors)
             form = CustomUserLoginForm()
