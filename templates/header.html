@@ -2,7 +2,7 @@
   <div class="header-inner">
     <a class="brand" href="/" aria-label="CashFlow — на главную">CashFlow</a>
     <div class="header-right">
-    {% if request.resolver_match.url_name not in "login register" %}
+    {% if request.resolver_match.url_name not in "login register create_account" %}
       <div class="account-switcher" id="accountSwitcher">
         <button class="btn btn-ghost" id="accountBtn" type="button" aria-haspopup="true" aria-expanded="false">
           <span class="account-label">Счёт:</span>
