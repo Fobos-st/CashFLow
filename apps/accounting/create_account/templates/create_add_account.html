@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link href="{% static 'css/create_add_account.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="cashflow-main">
+        <div class="container">
+            <!-- Выбор действия -->
+            <section class="choice-card card">
+                <div class="choice-header">
+                    <h1 class="choice-title">Управление счетами</h1>
+                    <p class="choice-subtitle">Выберите действие</p>
+                </div>
+
+                <div class="choice-buttons">
+                    <button class="choice-btn btn-create" data-action="create">
+                        <div class="btn-icon">➕</div>
+                        <div class="btn-content">
+                            <h3>Создать новый счет</h3>
+                            <p>Создайте счет для отслеживания ваших финансов</p>
+                        </div>
+                    </button>
+
+                    <button class="choice-btn btn-join" data-action="join">
+                        <div class="btn-icon">👥</div>
+                        <div class="btn-content">
+                            <h3>Вступить в групповой счет</h3>
+                            <p>Присоединитесь к существующему групповому счету</p>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Форма создания счета -->
+            <section class="form-card card" id="createForm">
+                <div class="form-header">
+                    <h2>Создать новый счет</h2>
+                    <button class="btn-back" type="button">← Назад</button>
+                </div>
+
+                <form class="account-form" method="post" action="{% url 'new_account:create_account' %}">
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <div class="input-field">
+                            <label>Имя счета</label>
+                            <input name="name" type="text" placeholder="Мой семейный бюджет" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Валюта</label>
+                            <select name="currency" required>
+                                <option value="">Выберите валюту</option>
+                                <option value="RUB">RUB</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Начальный баланс</label>
+                            <input value="0" name="balance" type="number" step="10" placeholder="0.00" required>
+                        </div>
+
+                        <div class="input-field">
+                            <label>Тип счета</label>
+                            <select name="type_account" required>
+                                <option value="">Выберите тип</option>
+                                <option value="personal">Персональный</option>
+                                <option value="group">Групповой</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Создать счет</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Форма вступления в счет -->
+            <section class="form-card card" id="joinForm">
+                <div class="form-header">
+                    <h2>Вступить в групповой счет</h2>
+                    <button class="btn-back" type="button">← Назад</button>
+                </div>
+
+                <form class="account-form">
+                    <div class="form-grid">
+                        <div class="input-field full-width">
+                            <label>Код приглашения</label>
+                            <input type="text" placeholder="Введите код из 6 символов" maxlength="6" required>
+                            <small class="input-hint">Получите код у администратора группового счета</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Вступить в счет</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/create_add_account.js' %}"></script>
+{% endblock %}
