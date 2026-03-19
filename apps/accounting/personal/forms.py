@@ -1,8 +1,7 @@
 from django import forms
 from django.db.models import Q
 from datetime import date
-from django.contrib.auth import get_user_model
-from .models import PersonalTransaction, PersonalAccount
+from .models import PersonalTransaction
 
 
 class TransactionCreateForm(forms.ModelForm):
@@ -24,8 +23,6 @@ class TransactionCreateForm(forms.ModelForm):
         fields = ['date', 'amount', 'status', 'transaction_type', 'category', 'comment']
 
     def __init__(self, *args, **kwargs):
-        # Извлекаем пользователя из аргументов
-        # Нейронка сделала, сам не знаю что это за magic
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
