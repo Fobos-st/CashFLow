@@ -26,7 +26,6 @@ class TransactionCreateForm(forms.ModelForm):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
 
-        # Фильтр: системные записи ИЛИ записи текущего пользователя
         # Нейронка сделала, сам не знаю что это за magic c Q
         user_filter = Q(user=self.user)
 
