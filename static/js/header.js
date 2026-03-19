@@ -46,7 +46,7 @@
 
     if (item.id === 'addAccountBtn') {
       // Редирект на страницу создания счёта
-      window.location.href = '/accounts/new';
+      window.location.href = '/create';
       return;
     }
 
