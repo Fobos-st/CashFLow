@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.db import models
+from django.urls import reverse
 from mptt.fields import TreeForeignKey
 
 from apps.accounting.BaseModel import AbstractAccount, AbstractTransactionStatus, AbstractCategory, AbstractTransactionType
@@ -18,10 +19,16 @@ class PersonalAccount(AbstractAccount):
         name (CharField): Имя счета
     """
     name = models.CharField(max_length=64)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Владелец счета", related_name='owner_account')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Владелец счета", related_name='personal_account')
 
     class Meta:
         db_table = 'personal_accounts'
+
+    def get_absolute_url(self):
+        """
+        Получаем прямую ссылку на статью
+        """
+        return reverse('main:index_account', kwargs={'account_id': self.pk})
 
     def __str__(self):
         return f"Счёт {self.user.full_name}"
