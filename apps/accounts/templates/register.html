@@ -39,7 +39,7 @@
       <h2>Регистрация</h2>
       <p class="auth-subtitle">Заполните поля ниже. Пароль минимум 8 символов.</p>
 
-      <!-- Пример ошибок формы -->
+      <!-- Под ошибки -->
       <!--
       <div class="auth-error">
         Исправьте ошибки: email уже занят, пароль слишком короткий.
@@ -79,7 +79,7 @@
         </div>
 
         <div class="auth-actions">
-          <a class="auth-link" href="/login">Уже есть аккаунт? Войти</a>
+          <a class="auth-link" href="{% url 'account:login' %}">Уже есть аккаунт? Войти</a>
           <button class="auth-btn primary" type="submit">Создать аккаунт</button>
         </div>
 
