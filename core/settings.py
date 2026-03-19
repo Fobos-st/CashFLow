@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.accounting.personal',
     'apps.accounting.group',
+    'apps.accounting.create_account',
 ]
 
 MIDDLEWARE = [
